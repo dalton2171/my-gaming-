@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IndieVerse - E-Football Hub</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to IndieVerse</h1>
+      <p>Your go-to platform for e-football gaming!</p>
+      <button id="toggleMode">Toggle Light/Dark Mode</button>
+      <div id="auth">
+        <button id="loginBtn">Login</button>
+        <button id="registerBtn">Register</button>
+        <span id="userGreeting"></span>
+      </div>
+    </header>
+
+    <section id="daily-rewards">
+      <h2>Subscription Rewards</h2>
+      <p>Complete a 24-hour subscription and get 2 hours free!</p>
+      <button id="claimReward">Claim Free 2 Hours</button>
+      <p id="rewardMessage"></p>
+    </section>
+
+    <section id="subscription">
+      <h2>Choose Your Subscription</h2>
+      <ul>
+        <li>6 hours - 10 KES</li>
+        <li>24 hours - 30 KES</li>
+        <li>One week - 80 KES</li>
+        <li>One month - 200 KES</li>
+      </ul>
+      <p>Make your payment via M-Pesa to: <strong>0745460866</strong></p>
+    </section>
+
+    <section id="payment-form">
+      <h2>Submit Payment Details</h2>
+      <form id="paymentForm">
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone" required />
+
+        <label for="transaction">Transaction ID:</label>
+        <input type="text" id="transaction" name="transaction" required />
+
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+
+    <script>
+      document
+        .getElementById("toggleMode")
+        .addEventListener("click", function () {
+          document.body.classList.toggle("dark-mode");
+          localStorage.setItem(
+            "darkMode",
+            document.body.classList.contains("dark-mode")
+          );
+        });
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+      }
+
+      document
+        .getElementById("claimReward")
+        .addEventListener("click", function () {
+          let lastSubscription = localStorage.getItem("lastSubscriptionDate");
+          let today = new Date().toDateString();
+          if (lastSubscription === today) {
+            document.getElementById("rewardMessage").textContent =
+              "You have already claimed your free 2 hours for today's subscription!";
+          } else {
+            localStorage.setItem("lastSubscriptionDate", today);
+            document.getElementById("rewardMessage").textContent =
+              "Congratulations! You've earned 2 extra hours of gameplay!";
+          }
+        });
+    </script>
+  </body>
+</html>
